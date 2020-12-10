@@ -13,33 +13,42 @@ void setup()
   table = new Table();
   table.addColumn("Test Time (s)");
   //add a column header "Data" for the collected data
-  table.addColumn("F(kg)      millistrain");
+  table.addColumn("F(kg)");
+  table.addColumn("millistrain");
 }
 
 void draw()
 {
   //variables called each time a new data entry is received
-  int d = day();
-  int m = month();
-  int y = year();
-  int h = hour();
-  int min = minute();
-  int s = second();
+  //int d = day();
+  //int m = month();
+  //int y = year();
+  //int h = hour();
+  //int min = minute();
+  //int s = second();
   int mili = millis();
   
-  if(mySerial.available() >= 14)
+  if(mySerial.available())
   {
-    //set the value recieved as a String
-    String value = mySerial.readString();
-    //check to make sure there is a value
-    if(value != null)
-    {
-      //add a new row for each value
-      TableRow newRow = table.addRow();
-      newRow.setString("Test Time (s)", str(mili/1000.0));
-      //place the new row and value under the "Data" column
-      newRow.setString("F(kg)      millistrain", value);
-    }
+		bool interupt = false;
+		String buffer = "";
+			while (!interupt){
+			if(mySerial.avaliable()) {
+				char next = mySerial.readChar();
+				if (next == '\n') {
+					interupt = true;
+				} else {
+					buffer.append(next);
+				}			
+			}
+		}
+			
+		//add a new row for each value
+		TableRow newRow = table.addRow();
+		newRow.setString("Test Time (s)", str(mili/1000.0));
+		//place the new row and value under the "Data" column
+		newRow.setString("F(kg)",split(buffer,',')[0]);
+		newRow.setString("millistrain",split(buffer,',')[1]);
   }
 }
 

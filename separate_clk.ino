@@ -30,18 +30,8 @@ void loop() {
   while(!Serial.availableForWrite()){}
   float force = scale1.get_units();
   float r = scale2.get_units();
-  if (force<100) Serial.print('0');
-  if (force<10) Serial.print('0');
-  if (force<0){
-    force=0;
-  }
   Serial.print(scale1.get_units(), 2);
   Serial.print(',');
-  if (r<100) Serial.print('0');
-  if (r<10) Serial.print('0');
-  if (r<0){
-    r=0;
-  }
-  Serial.print(scale2.get_units(), 5);
+  Serial.print(scale2.get_units(), 7);
   Serial.println();
 }
