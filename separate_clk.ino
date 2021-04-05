@@ -9,7 +9,7 @@ HX711 scale1;
 HX711 scale2;
  
 float force_calibration_factor = -22400;
-float strain_calibration_factor = 255612315;
+float strain_calibration_factor = 260584752;
  
 void setup() {
   Serial.begin(115200);
